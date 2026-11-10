@@ -1,6 +1,6 @@
 {
-  "version": "1.13.1",
+  "version": "1.13.2",
   "url": "https://raw.githubusercontent.com/binjin-maker/DoogMacro/main/update/FrutigerMacro.exe",
-  "sha256": "c8ab9e9140485f72bb0a6c0933cdb2e9dbdef35c3274c2a20f336d747144e649",
-  "notes": "1.13.1\n- New Frutiger Aero glass logo (the watching eye, now glossy)\n\n1.13.0\n- Renamed to FrutigerMacro (settings & presets kept, old .dmac files still load)\n\n1.12.3\n- Scrollable changelog\n\n1.12.2\n- Repo-based updater, Update tab, resizable window, Disable keys, Magic Type"
+  "sha256": "e2694a26f002b777710440bb5ef0635567cdb3f399b1920ba23996f37b2be022",
+  "notes": "1.13.2\n- Black Frutiger Aero logo: dark glass tile, cool sheen, glowing red watching eye\n\n1.13.0\n- Renamed to FrutigerMacro (settings & presets kept, old .dmac files still load)\n\n1.12.2\n- Repo-based updater, Update tab, resizable window, Disable keys, Magic Type"
 }
