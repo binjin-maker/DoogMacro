@@ -1,6 +1,6 @@
 {
-  "version": "1.13.2",
+  "version": "1.14.0",
   "url": "https://raw.githubusercontent.com/binjin-maker/DoogMacro/main/update/FrutigerMacro.exe",
-  "sha256": "e2694a26f002b777710440bb5ef0635567cdb3f399b1920ba23996f37b2be022",
-  "notes": "1.13.2\n- Black Frutiger Aero logo: dark glass tile, cool sheen, glowing red watching eye\n\n1.13.0\n- Renamed to FrutigerMacro (settings & presets kept, old .dmac files still load)\n\n1.12.2\n- Repo-based updater, Update tab, resizable window, Disable keys, Magic Type"
+  "sha256": "a2f0fde4f35f470abcf67d41bf98a7d7bff4bacbe724bdd903eb022473f5851c",
+  "notes": "1.14.0\n- New Learn tab: press one button, it reads your screen and asks Claude for a guide/answer (uses your own Anthropic API key, saved locally)\n- Status light: yellow when an update is ready, red on an update error, green when up to date\n- More robust updater (fixes the 'couldn't swap' failure with locked backup files)\n\n1.13.2\n- Black Frutiger Aero logo (glowing red watching eye)\n\n1.13.0\n- Renamed to FrutigerMacro (settings & presets kept, old .dmac files still load)\n\n1.12.2\n- Repo-based updater, Update tab, resizable window, Disable keys, Magic Type"
 }

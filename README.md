@@ -28,6 +28,8 @@ After that, updates install themselves from the **Update** tab. The app checks [
 
 **Editor**: view and edit every recorded event, insert/delete/reorder, scale delays, strip mouse moves
 
+**Learn**: reads your screen and asks Claude (your own Anthropic API key) for a guide or answer
+
 **Typing Test**: measures your WPM, typo rate, burst rate and pause rate, then applies matching Humanizer settings
 
 **Extras**
