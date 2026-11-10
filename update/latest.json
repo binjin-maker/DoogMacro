@@ -1,6 +1,6 @@
 {
-  "version": "1.12.3",
-  "url": "https://raw.githubusercontent.com/binjin-maker/DoogMacro/main/update/DoogMacro.exe",
-  "sha256": "625caafe85fe1d40ac17c9d68fd9c02ad3247b757ffcf8e9b551659143ba26c7",
-  "notes": "1.12.3\n- Changelog box now scrolls (mouse wheel + scrollbar)\n- First update delivered through the built-in updater\n\n1.12.2\n- Updates now come straight from the DoogMacro repo\n- Update tab: connection status, version info, changelog, one-click install\n- Resizable window (drag any edge, double-click the title area to reset)\n- Disable keys button + Ctrl+Shift+~ toggle\n- Magic Type: mash any keys and it types your Instruct text\n- Layout fixes so labels and buttons always fit"
+  "version": "1.13.0",
+  "url": "https://raw.githubusercontent.com/binjin-maker/DoogMacro/main/update/FrutigerMacro.exe",
+  "sha256": "48e95f236938ac449a77500ec8c5f4256491a66014b565e4565013bfa9910857",
+  "notes": "1.13.0\n- Renamed to FrutigerMacro\n- Settings move to FrutigerMacro.ini automatically (presets & hotkeys kept)\n- Macros save as .fmac; old .dmac files still load\n\n1.12.3\n- Changelog box now scrolls (mouse wheel + scrollbar)\n\n1.12.2\n- Updates now come straight from the GitHub repo\n- Update tab, resizable window, Disable keys, Magic Type"
 }

@@ -1,4 +1,4 @@
-# DOOG Macro
+# FrutigerMacro
 
 A free, open-source Windows macro recorder and humanized auto-typer. No paywall, no installer, no viruses, just one small EXE.
 
@@ -6,7 +6,7 @@ Made by **DOOG unincorporated**.
 
 ## Download
 
-Grab [`update/DoogMacro.exe`](https://github.com/binjin-maker/DoogMacro/raw/main/update/DoogMacro.exe) and run it. Windows SmartScreen may warn because the EXE isn't code-signed; click **More info → Run anyway**.
+Grab [`update/FrutigerMacro.exe`](https://github.com/binjin-maker/DoogMacro/raw/main/update/FrutigerMacro.exe) and run it. Windows SmartScreen may warn because the EXE isn't code-signed; click **More info → Run anyway**.
 
 After that, updates install themselves from the **Update** tab. The app checks [`update/latest.json`](update/latest.json) and verifies the EXE's SHA-256 before swapping it in.
 
@@ -15,7 +15,7 @@ After that, updates install themselves from the **Update** tab. The app checks [
 **Recorder**
 - Record keyboard + mouse (clicks, side buttons, scroll, movement)
 - Play back with repeat count (0 = loop forever) and speed multiplier
-- Save/load `.dmac` macro files (plain text, hand-editable)
+- Save/load `.fmac` macro files (plain text, hand-editable; old `.dmac` files still load)
 
 **Instruct (auto-typer)**
 - Fixed WPM, fixed ms/char, or **Humanizer** (bursts, pauses, typos that get noticed late and backspaced)
@@ -32,14 +32,14 @@ After that, updates install themselves from the **Update** tab. The app checks [
 
 **Extras**
 - Global, rebindable hotkeys (F9 record, F10 play, F11 type, F8 stop, Ctrl+Alt+V clipboard)
-- **Disable keys** (Ctrl+Shift+~) blocks your physical typing keys while DOOG keeps typing
+- **Disable keys** (Ctrl+Shift+~) blocks your physical typing keys while FrutigerMacro keeps typing
 - Frutiger Aero / Vista glass UI, resizable (double-click the title area to reset)
 - Built-in updater with changelog; works fully offline
 
-## `.dmac` format
+## `.fmac` format
 
 ```
-DOOGMACRO 1
+FRUTIGERMACRO 1
 # <delay ms since previous> <event> <args>
 0 KD 65 30 0        # key down: vk scan extended
 80 KU 65 30 0       # key up
@@ -63,4 +63,4 @@ Or on Windows with MinGW-w64, using the same flags as `build.sh`.
 
 ## Settings
 
-Everything is saved to `DoogMacro.ini` next to the EXE: hotkeys, Instruct settings, presets, window scale.
+Everything is saved to `FrutigerMacro.ini` next to the EXE: hotkeys, Instruct settings, presets, window scale.

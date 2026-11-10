@@ -409,7 +409,7 @@ static void putUtf8Escaped(FILE *f, const wchar_t *w) {
 static int saveMacro(const wchar_t *path) {
     FILE *f = _wfopen(path, L"wb");
     if (!f) return 0;
-    fputs("DOOGMACRO 1\n# <delay ms since previous> <event> <args>\n"
+    fputs("FRUTIGERMACRO 1\n# <delay ms since previous> <event> <args>\n"
           "# KD/KU vk scan ext | MV/LD/LU/RD/RU/MD/MU/X1D/X1U/X2D/X2U x y | WH/HW x y delta | TYPE text\n", f);
     for (int i = 0; i < nev; i++) {
         Ev *e = &ev[i];
@@ -435,7 +435,7 @@ static int loadMacro(const wchar_t *path) {
     while (fgets(line, sizeof line, f)) {
         line[strcspn(line, "\r\n")] = 0;
         char *p = line; while (*p == ' ' || *p == '\t') p++;
-        if (!*p || *p == '#' || !strncmp(p, "DOOGMACRO", 9)) continue;
+        if (!*p || *p == '#' || !strncmp(p, "DOOGMACRO", 9) || !strncmp(p, "FRUTIGERMACRO", 13)) continue;
         unsigned long d; char name[16]; int off = 0;
         if (sscanf(p, "%lu %15s%n", &d, name, &off) < 2) continue;
         int t = -1;
@@ -468,8 +468,8 @@ static int fileDlg(wchar_t *buf, int save) {
     OPENFILENAMEW o = {0};
     buf[0] = 0;
     o.lStructSize = sizeof o; o.hwndOwner = hMain;
-    o.lpstrFilter = L"DOOG Macro (*.dmac)\0*.dmac\0All files\0*.*\0";
-    o.lpstrFile = buf; o.nMaxFile = MAX_PATH; o.lpstrDefExt = L"dmac";
+    o.lpstrFilter = L"FrutigerMacro macros (*.fmac;*.dmac)\0*.fmac;*.dmac\0All files\0*.*\0";
+    o.lpstrFile = buf; o.nMaxFile = MAX_PATH; o.lpstrDefExt = L"fmac";
     o.Flags = save ? OFN_OVERWRITEPROMPT : OFN_FILEMUSTEXIST;
     return save ? GetSaveFileNameW(&o) : GetOpenFileNameW(&o);
 }
@@ -663,8 +663,8 @@ static void bubble(Canvas *c, double cx, double cy, double r) {
 
 /* ---------- updater ---------- */
 
-#define APP_VERSION   "1.12.3"
-#define APP_VERSION_W L"1.12.3"
+#define APP_VERSION   "1.13.0"
+#define APP_VERSION_W L"1.13.0"
 #define WM_UPDCHECKED (WM_APP + 5)
 #define WM_UPDFAIL    (WM_APP + 6)
 #define WM_UPDRESTART (WM_APP + 7)
@@ -683,7 +683,7 @@ static volatile LONG kbBlocked, magicOn;
 
 static int httpGet(const wchar_t *url, const wchar_t *hdrs, char **out, size_t *outLen, DWORD *httpSt, int progress) {
     *out = NULL; *outLen = 0; *httpSt = 0;
-    HINTERNET in = InternetOpenW(L"DOOG-Macro-Updater/" APP_VERSION_W, INTERNET_OPEN_TYPE_PRECONFIG, NULL, NULL, 0);
+    HINTERNET in = InternetOpenW(L"FrutigerMacro-Updater/" APP_VERSION_W, INTERNET_OPEN_TYPE_PRECONFIG, NULL, NULL, 0);
     if (!in) return (int)GetLastError();
     DWORD to = 15000;
     InternetSetOptionW(in, INTERNET_OPTION_CONNECT_TIMEOUT, &to, sizeof to);
@@ -907,7 +907,7 @@ static void restartUpdated(void) {
         DestroyWindow(hFrame);
     } else {
         registerAll();
-        status(L"Update installed — close and reopen DOOG Macro to finish.");
+        status(L"Update installed — close and reopen FrutigerMacro to finish.");
     }
 }
 
@@ -1196,7 +1196,7 @@ static void macroInfo(wchar_t *out, int n) {
         L"Tips\n"
         L"• Clicks on this window and the hotkey keys are never recorded.\n"
         L"• Speed 2.0 plays twice as fast; Repeat 0 loops until you hit Stop.\n"
-        L"• .dmac files are plain text: open one in Notepad to tweak delays or add lines like  500 TYPE hello world",
+        L"• .fmac macro files are plain text: open one in Notepad to tweak delays or add lines like  500 TYPE hello world",
         nev, total / 1000.0, fn, keys, clicks, moves, wheels, types);
 }
 
@@ -2189,7 +2189,7 @@ static void setKbLabel(void) {
 static void toggleKb(void) {
     kbBlocked = !kbBlocked;
     setKbLabel();
-    status(kbBlocked ? L"Keyboard disabled — letters, numbers & symbols are blocked (DOOG can still type). Ctrl+Shift+~ turns it back on."
+    status(kbBlocked ? L"Keyboard disabled — letters, numbers & symbols are blocked (FrutigerMacro can still type). Ctrl+Shift+~ turns it back on."
                      : L"Keyboard enabled again.");
 }
 
@@ -2578,7 +2578,14 @@ int WINAPI WinMain(HINSTANCE hi, HINSTANCE hp, LPSTR cmd, int show) {
     GetModuleFileNameW(NULL, exePath, MAX_PATH);
     wcscpy(iniPath, exePath);
     wchar_t *sl = wcsrchr(iniPath, L'\\'); if (sl) sl[1] = 0;
-    wcscat(iniPath, L"DoogMacro.ini");
+    wcscat(iniPath, L"FrutigerMacro.ini");
+    {
+        wchar_t oldIni[MAX_PATH]; wcscpy(oldIni, iniPath);
+        wchar_t *s2 = wcsrchr(oldIni, L'\\'); if (s2) s2[1] = 0;
+        wcscat(oldIni, L"DoogMacro.ini");
+        if (GetFileAttributesW(iniPath) == INVALID_FILE_ATTRIBUTES && GetFileAttributesW(oldIni) != INVALID_FILE_ATTRIBUTES)
+            MoveFileW(oldIni, iniPath);
+    }
     {
         wchar_t old[MAX_PATH + 8]; swprintf(old, MAX_PATH + 8, L"%s.old", exePath);
         for (int i = 0; i < 20 && GetFileAttributesW(old) != INVALID_FILE_ATTRIBUTES && !DeleteFileW(old); i++) Sleep(150);
@@ -2607,7 +2614,7 @@ int WINAPI WinMain(HINSTANCE hi, HINSTANCE hp, LPSTR cmd, int show) {
     int cw = backC.w, ch = backC.h, fw = frameC.w, fh = frameC.h;
 
     RECT wa; SystemParametersInfoW(SPI_GETWORKAREA, 0, &wa, 0);
-    hFrame = CreateWindowExW(WS_EX_TOPMOST | WS_EX_APPWINDOW, L"DoogFrame", L"DOOG Macro",
+    hFrame = CreateWindowExW(WS_EX_TOPMOST | WS_EX_APPWINDOW, L"DoogFrame", L"FrutigerMacro",
                              WS_POPUP | WS_CAPTION | WS_THICKFRAME | WS_MINIMIZEBOX | WS_SYSMENU | WS_CLIPCHILDREN,
                              wa.left + (wa.right - wa.left - fw) / 2, wa.top + (wa.bottom - wa.top - fh) / 2, fw, fh,
                              NULL, NULL, hi, NULL);
