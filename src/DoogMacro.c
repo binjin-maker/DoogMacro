@@ -36,7 +36,7 @@ enum { ID_REC = 101, ID_STOP, ID_PLAY, ID_SAVE, ID_LOAD, ID_CLEAR, ID_REPEAT, ID
        ID_TYPOP, ID_BURSTP, ID_PAUSEP,
        ID_LIST = 601, ID_EDELAY, ID_EEVENT, ID_EARGS, ID_EUPD, ID_EINS, ID_EDEL, ID_EUP, ID_EDOWN,
        ID_ESCALE, ID_ESCALEGO, ID_ESTRIP, ID_ESAVE, ID_PRESET, ID_PSAVE, ID_PDEL,
-       ID_UCHECK = 701, ID_UINSTALL, ID_UPAGE, ID_KBLOCK, ID_MAGIC,
+       ID_UCHECK = 701, ID_UINSTALL, ID_UPAGE, ID_KBLOCK, ID_MAGIC, ID_UNOTES,
        ID_TEST = 501, ID_TRESTART, ID_TCLEAR, ID_TNEW, ID_TFIN, ID_TAPPLY, ID_TCLOSE, ID_TEDIT,
        ID_HK0 = 301, ID_HK1, ID_HK2, ID_HK3, ID_HKAPPLY, ID_STATUS = 400 };
 
@@ -663,8 +663,8 @@ static void bubble(Canvas *c, double cx, double cy, double r) {
 
 /* ---------- updater ---------- */
 
-#define APP_VERSION   "1.12.2"
-#define APP_VERSION_W L"1.12.2"
+#define APP_VERSION   "1.12.3"
+#define APP_VERSION_W L"1.12.3"
 #define WM_UPDCHECKED (WM_APP + 5)
 #define WM_UPDFAIL    (WM_APP + 6)
 #define WM_UPDRESTART (WM_APP + 7)
@@ -819,10 +819,24 @@ static DWORD WINAPI CheckThread(LPVOID unused) {
     return 0;
 }
 
+static void fillNotes(void) {
+    const wchar_t *src = (updNotes && updNotes[0]) ? updNotes :
+        updConn == CONN_OFFLINE ? L"Changelog unavailable offline." :
+        updConn == CONN_CHECKING ? L"Checking for updates…" :
+        updLatest[0] ? L"No release notes for this version." : L"No changelog yet — press Check now.";
+    size_t n = wcslen(src);
+    wchar_t *o = malloc((n * 2 + 1) * sizeof(wchar_t)), *q = o;
+    for (const wchar_t *p = src; *p; p++) { if (*p == L'\n') *q++ = L'\r'; *q++ = *p; }
+    *q = 0;
+    SetDlgItemTextW(hMain, ID_UNOTES, o);
+    free(o);
+}
+
 static void startCheck(void) {
     if (InterlockedCompareExchange(&updBusy, 1, 0)) return;
     updConn = CONN_CHECKING;
     wcscpy(updConnMsg, L"Checking…");
+    fillNotes();
     InvalidateRect(hMain, NULL, FALSE);
     CloseHandle(CreateThread(NULL, 0, CheckThread, NULL, 0, NULL));
 }
@@ -1220,11 +1234,6 @@ static void paintMain(HDC hdc) {
         wchar_t hd[96];
         if (updLatest[0]) swprintf(hd, 96, L"What's new in %s", updLatest); else wcscpy(hd, L"What's new");
         textAt(dc, hBold, hd, 30, 170, 380, 18, NAVY, DT_LEFT | DT_SINGLELINE);
-        const wchar_t *notes = (updNotes && updNotes[0]) ? updNotes :
-            updConn == CONN_OFFLINE ? L"Changelog unavailable offline." :
-            updConn == CONN_CHECKING ? L"Checking for updates…" :
-            updLatest[0] ? L"No release notes for this version." : L"No changelog yet — press Check now.";
-        textAt(dc, hFont, notes, 30, 190, 380, 96, NAVY, DT_LEFT | DT_WORDBREAK | DT_END_ELLIPSIS);
     }
     if (curPage == PG_TEST) {
         textAt(dc, hPrompt, PROMPTS[promptIdx], 30, 97, 380, 92, NAVY, DT_LEFT | DT_WORDBREAK);
@@ -2291,6 +2300,8 @@ static void buildUI(void) {
     BTN(L"Save…", 364, 314, 56, 28, ID_ESAVE);
 
     buildPage = PG_UPDATE;
+    HWND nb = mk(0, L"EDIT", L"", WS_VSCROLL | ES_MULTILINE | ES_READONLY | ES_AUTOVSCROLL, 26, 190, 388, 94, ID_UNOTES);
+    (void)nb;
     BTN(L"Check now", 20, 326, 110, 28, ID_UCHECK);
     BTN(L"Install update", 134, 326, 140, 28, ID_UINSTALL);
     BTN(L"Open GitHub page", 278, 326, 142, 28, ID_UPAGE);
@@ -2496,6 +2507,7 @@ static LRESULT CALLBACK WndProc(HWND h, UINT m, WPARAM wp, LPARAM lp) {
     case WM_DRAWITEM: drawButton((DRAWITEMSTRUCT *)lp); return TRUE;
     case WM_NOTIFY: if (((NMHDR *)lp)->idFrom == ID_LIST) return listNotify((NMHDR *)lp); break;
     case WM_CTLCOLOREDIT:
+    case WM_CTLCOLORSTATIC:
         SetTextColor((HDC)wp, NAVY); SetBkColor((HDC)wp, RGB(255, 255, 255));
         return (LRESULT)GetStockObject(WHITE_BRUSH);
     case WM_ERASEBKGND: return 1;
@@ -2535,6 +2547,7 @@ static LRESULT CALLBACK WndProc(HWND h, UINT m, WPARAM wp, LPARAM lp) {
     case WM_KBTOGGLE: toggleKb(); return 0;
     case WM_MAGIC: magicKey((int)wp); return 0;
     case WM_UPDCHECKED:
+        fillNotes();
         InvalidateRect(h, NULL, FALSE);
         if (updAvail == 1) {
             if (tog[TG_UAUTO].on && !busy()) startInstall();
@@ -2611,6 +2624,7 @@ int WINAPI WinMain(HINSTANCE hi, HINSTANCE hp, LPSTR cmd, int show) {
     loadSettings();
     applyHotkeys(0);
     newPrompt(0);
+    fillNotes();
     showPage(PG_INSTR);
     idleStatus();
     setKbLabel();
