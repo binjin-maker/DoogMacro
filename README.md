@@ -6,9 +6,9 @@ Made by **DOOG unincorporated**.
 
 ## Download
 
-Grab `DoogMacro.exe` from the [latest release](https://github.com/binjin-maker/DoogMacro/releases/latest) and run it. Windows SmartScreen may warn because the EXE isn't code-signed; click **More info → Run anyway**.
+Grab [`update/DoogMacro.exe`](https://github.com/binjin-maker/DoogMacro/raw/main/update/DoogMacro.exe) and run it. Windows SmartScreen may warn because the EXE isn't code-signed; click **More info → Run anyway**.
 
-After that, updates install themselves from the **Update** tab.
+After that, updates install themselves from the **Update** tab. The app checks [`update/latest.json`](update/latest.json) and verifies the EXE's SHA-256 before swapping it in.
 
 ## Features
 

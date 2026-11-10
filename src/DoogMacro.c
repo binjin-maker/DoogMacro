@@ -663,8 +663,8 @@ static void bubble(Canvas *c, double cx, double cy, double r) {
 
 /* ---------- updater ---------- */
 
-#define APP_VERSION   "1.12.1"
-#define APP_VERSION_W L"1.12.1"
+#define APP_VERSION   "1.12.2"
+#define APP_VERSION_W L"1.12.2"
 #define WM_UPDCHECKED (WM_APP + 5)
 #define WM_UPDFAIL    (WM_APP + 6)
 #define WM_UPDRESTART (WM_APP + 7)
@@ -778,21 +778,21 @@ static wchar_t *cleanNotes(const char *md) {
 
 static DWORD WINAPI CheckThread(LPVOID unused) {
     (void)unused;
-    wchar_t url[256];
-    swprintf(url, 256, L"https://api.github.com/repos/%s/releases/latest", updRepo);
+    wchar_t url[300];
+    swprintf(url, 300, L"https://raw.githubusercontent.com/%s/main/update/latest.json?t=%llu", updRepo, (unsigned long long)GetTickCount64());
     char *b; size_t len; DWORD st;
-    int e = httpGet(url, L"Accept: application/vnd.github+json\r\nX-GitHub-Api-Version: 2022-11-28\r\n", &b, &len, &st, 0);
+    int e = httpGet(url, L"Cache-Control: no-cache\r\n", &b, &len, &st, 0);
     int conn = CONN_ONLINE, avail = 0;
     wchar_t latest[32] = L"", dl[1024] = L"", page[512] = L"", dig[80] = L"", msg[160] = L"";
     wchar_t *notes = NULL;
+    swprintf(page, 512, L"https://github.com/%s", updRepo);
     if (e) {
         conn = (e == ERROR_INTERNET_NAME_NOT_RESOLVED || e == ERROR_INTERNET_CANNOT_CONNECT ||
                 e == ERROR_INTERNET_TIMEOUT || e == ERROR_INTERNET_DISCONNECTED) ? CONN_OFFLINE : CONN_ERROR;
         if (conn == CONN_OFFLINE) wcscpy(msg, L"Offline — no internet connection (everything else still works)");
         else swprintf(msg, 160, L"Couldn't reach GitHub (network error %d) — maybe a school/work firewall", e);
     } else if (st == 404) {
-        conn = CONN_ONLINE;
-        wcscpy(msg, L"Online — but no releases are published on the update repo yet");
+        wcscpy(msg, L"Online — but no update has been published to the repo yet");
     } else if (st == 403 || st == 429) {
         conn = CONN_ERROR;
         wcscpy(msg, L"Online — GitHub rate-limited the check, try again in a bit");
@@ -801,25 +801,13 @@ static DWORD WINAPI CheckThread(LPVOID unused) {
         swprintf(msg, 160, L"Online — update server answered HTTP %lu", (unsigned long)st);
     } else {
         wcscpy(msg, L"Online — connected to GitHub");
-        char *tag = jsonStr(b, "tag_name", NULL, NULL), *html = jsonStr(b, "html_url", NULL, NULL), *body = jsonStr(b, "body", NULL, NULL);
-        u8w(tag, latest, 32); u8w(html, page, 512);
-        notes = cleanNotes(body ? body : "");
-        const char *assets = strstr(b, "\"assets\""), *prev = assets;
-        for (const char *p = assets; p && (p = strstr(p, "\"browser_download_url\"")); p++) {
-            char *u = jsonStr(b, "browser_download_url", p, NULL);
-            size_t ul = u ? strlen(u) : 0;
-            if (u && ul > 4 && !_stricmp(u + ul - 4, ".exe")) {
-                u8w(u, dl, 1024);
-                char *d = jsonStr(b, "digest", prev, p);
-                if (d && !strncmp(d, "sha256:", 7)) u8w(d + 7, dig, 80);
-                free(d); free(u);
-                break;
-            }
-            free(u);
-            prev = p;
-        }
+        char *ver = jsonStr(b, "version", NULL, NULL), *u8 = jsonStr(b, "url", NULL, NULL);
+        char *sha = jsonStr(b, "sha256", NULL, NULL), *nt = jsonStr(b, "notes", NULL, NULL);
+        if (ver) { latest[0] = L'v'; u8w(ver, latest + 1, 31); }
+        u8w(u8, dl, 1024); u8w(sha, dig, 80);
+        notes = cleanNotes(nt ? nt : "");
         if (latest[0] && verNewer(latest, APP_VERSION_W)) avail = dl[0] ? 1 : 2;
-        free(tag); free(html); free(body);
+        free(ver); free(u8); free(sha); free(nt);
     }
     free(b);
     wcscpy(updLatest, latest); wcscpy(updUrl, dl); wcscpy(updPage, page); wcscpy(updDigest, dig); wcscpy(updConnMsg, msg);
@@ -1058,7 +1046,7 @@ static void renderPages(void) {
         }
         if (p == PG_UPDATE) {
             textAt(dc, hTitle, L"Updates", 20, 50, 300, 18, NAVY, DT_LEFT | DT_SINGLELINE);
-            textAt(dc, hSmall, L"pulled from GitHub releases · works offline", 200, 53, 220, 16, HINT, DT_RIGHT | DT_SINGLELINE);
+            textAt(dc, hSmall, L"pulled from GitHub · works offline", 200, 53, 220, 16, HINT, DT_RIGHT | DT_SINGLELINE);
         }
         if (p == PG_EDIT) {
             textAt(dc, hTitle, L"Macro Editor", 20, 50, 300, 18, NAVY, DT_LEFT | DT_SINGLELINE);
@@ -2305,7 +2293,7 @@ static void buildUI(void) {
     buildPage = PG_UPDATE;
     BTN(L"Check now", 20, 326, 110, 28, ID_UCHECK);
     BTN(L"Install update", 134, 326, 140, 28, ID_UINSTALL);
-    BTN(L"Open release page", 278, 326, 142, 28, ID_UPAGE);
+    BTN(L"Open GitHub page", 278, 326, 142, 28, ID_UPAGE);
 
     buildPage = PG_TEST;
     HWND ed = mk(WS_EX_CLIENTEDGE, L"EDIT", L"", WS_TABSTOP | WS_VSCROLL | ES_MULTILINE | ES_AUTOVSCROLL, 20, 202, 400, 110, ID_TEDIT);
@@ -2440,7 +2428,7 @@ static LRESULT CALLBACK WndProc(HWND h, UINT m, WPARAM wp, LPARAM lp) {
         case ID_UINSTALL: startInstall(); break;
         case ID_UPAGE: {
             wchar_t url[600];
-            if (updPage[0]) wcscpy(url, updPage); else swprintf(url, 600, L"https://github.com/%s/releases", updRepo);
+            if (updPage[0]) wcscpy(url, updPage); else swprintf(url, 600, L"https://github.com/%s", updRepo);
             ShellExecuteW(NULL, L"open", url, NULL, NULL, SW_SHOWNORMAL);
         } break;
         case ID_KBLOCK: toggleKb(); break;

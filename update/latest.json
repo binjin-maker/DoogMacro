@@ -1,0 +1,6 @@
+{
+  "version": "1.12.2",
+  "url": "https://raw.githubusercontent.com/binjin-maker/DoogMacro/main/update/DoogMacro.exe",
+  "sha256": "b320e735fd45f07ec3d3bfc6663735c155e3c8b39cb5f81e830c32e32341a447",
+  "notes": "- Update tab: connection status, version info, changelog, one-click install\n- Updates now come straight from the DoogMacro repo\n- Resizable window (drag any edge, double-click the title area to reset)\n- Disable keys button + Ctrl+Shift+~ toggle\n- Magic Type: mash any keys and it types your Instruct text\n- Layout fixes so labels and buttons always fit"
+}
