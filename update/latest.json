@@ -1,6 +1,6 @@
 {
-  "version": "1.15.3",
+  "version": "1.15.4",
   "url": "https://raw.githubusercontent.com/binjin-maker/DoogMacro/main/update/FrutigerMacro.exe",
-  "sha256": "88db1e13db71424e3b4e30ba612aa3935b0d7892f013e32deeaa3593bf6b0804",
-  "notes": "1.15.3\n- New startup animation: the eye logo focuses in with the version shown\n- Each tab now has a small Vista-style icon in its header\n- Updating shades the window with an 'Updating…' progress bar\n- Stability and Security improvements"
+  "sha256": "623c850b01ed165d023c3bec77753be4ecd1b2543b05474ce08ab698a14de64f",
+  "notes": "1.15.4\n- Removed the bubbles from the logo and the startup animation"
 }
