@@ -1,6 +1,6 @@
 {
-  "version": "1.15.5",
+  "version": "1.15.6",
   "url": "https://raw.githubusercontent.com/binjin-maker/DoogMacro/main/update/FrutigerMacro.exe",
-  "sha256": "9065cb1dad86710777c74e4043d07dd62fbe77855ff2c1eb3db8d4b7ec6188d5",
-  "notes": "1.15.5\n- Fixed a checksum error when updating (GitHub was serving a cached older file); downloads are now cache-busted\n- No-bubble logo and startup animation"
+  "sha256": "b46697855ca68e9e1712b59749734dcbb74d61447dd13e65f1a86076a315e147",
+  "notes": "1.15.6\n- Updates now verify the downloaded copy is genuine before installing (never installs something that would flag itself as pirated)\n- Clearer update errors: checksum/download problems say to wait until the new version is stable"
 }
