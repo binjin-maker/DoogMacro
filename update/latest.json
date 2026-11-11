@@ -1,7 +1,7 @@
 {
-  "version": "1.15.13",
+  "version": "1.15.14",
   "minRun": "1.15.7",
   "url": "https://raw.githubusercontent.com/binjin-maker/DoogMacro/main/update/FrutigerMacro.exe",
-  "sha256": "449a7995d1418a7bacfc6fe380a7a76d72086a98967c3b2605d69fd8886cf27d",
-  "notes": "1.15.13\n- Read+Type can no longer wipe your document: if it can't reliably read the target, or the text shares nothing in common, it safely does nothing instead of deleting"
+  "sha256": "9d73ec271a49f513ada3f61fa25607332e9399a55d937b08e1f14c4d1684e05b",
+  "notes": "1.15.14\n- Read+Type now reads Google Docs and other apps reliably: it waits for the copy to finish instead of giving up too early"
 }
