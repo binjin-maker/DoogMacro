@@ -1,7 +1,7 @@
 {
-  "version": "1.15.10",
+  "version": "1.15.11",
   "minRun": "1.15.7",
   "url": "https://raw.githubusercontent.com/binjin-maker/DoogMacro/main/update/FrutigerMacro.exe",
-  "sha256": "a30cae53e23b970b6c7d4204df54d15bda4705186b669a781dceb29be69c4c3a",
-  "notes": "Updated Version."
+  "sha256": "fe987861bd9540dfdff579fb0de5edfd90047e717696fb47d3598bb7b7f19152",
+  "notes": "1.15.11\n- New Read+Type mode: reads the target text, finds what differs from the Instruct box, and edits only those changes (deletes the old span and types the new one)"
 }
