@@ -669,8 +669,8 @@ static void bubble(Canvas *c, double cx, double cy, double r) {
 
 /* ---------- updater ---------- */
 
-#define APP_VERSION   "1.14.3"
-#define APP_VERSION_W L"1.14.3"
+#define APP_VERSION   "1.14.4"
+#define APP_VERSION_W L"1.14.4"
 #define WM_UPDCHECKED (WM_APP + 5)
 #define WM_UPDFAIL    (WM_APP + 6)
 #define WM_UPDRESTART (WM_APP + 7)
@@ -1081,7 +1081,7 @@ static void renderPages(void) {
         }
         if (p == PG_LEARN) {
             textAt(dc, hTitle, L"Learn", 20, 50, 300, 18, NAVY, DT_LEFT | DT_SINGLELINE);
-            textAt(dc, hSmall, L"press Learn — it reads your screen and asks Claude", 180, 53, 240, 16, HINT, DT_RIGHT | DT_SINGLELINE);
+            textAt(dc, hSmall, L"All prompts are paid — even with a subscription or plan", 150, 53, 270, 16, RGB(198, 112, 20), DT_RIGHT | DT_SINGLELINE);
         }
         if (p == PG_EDIT) {
             textAt(dc, hTitle, L"Macro Editor", 20, 50, 300, 18, NAVY, DT_LEFT | DT_SINGLELINE);
@@ -2578,7 +2578,7 @@ static void buildUI(void) {
     BTN(L"Read my screen", 20, 224, 180, 30, ID_LGO);
     BTN(L"Copy", 208, 224, 96, 30, ID_LCOPY);
     BTN(L"Clear", 312, 224, 108, 30, ID_LCLR);
-    mk(WS_EX_CLIENTEDGE, L"EDIT", L"", WS_VSCROLL | ES_MULTILINE | ES_READONLY | ES_AUTOVSCROLL, 24, 276, 392, 228, ID_LOUT);
+    mk(WS_EX_CLIENTEDGE, L"EDIT", L"Notice: every prompt here is paid. It uses your own Anthropic API credits (console.anthropic.com), billed per use — even if you have a Claude subscription or plan. Your chat subscription does NOT cover this.\r\n\r\nPaste your API key above, then press \u201cRead my screen\u201d.", WS_VSCROLL | ES_MULTILINE | ES_READONLY | ES_AUTOVSCROLL, 24, 276, 392, 228, ID_LOUT);
 
     buildPage = PG_GLOBAL;
     for (int i = 0; i < HK_N; i++) {

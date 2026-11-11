@@ -1,6 +1,6 @@
 {
-  "version": "1.14.3",
+  "version": "1.14.4",
   "url": "https://raw.githubusercontent.com/binjin-maker/DoogMacro/main/update/FrutigerMacro.exe",
-  "sha256": "84e265469c87054314a52e503228cdeb1c7e77b561ad3404c0c76bd69cfc615e",
-  "notes": "1.14.3\n- Learn tab is back (reads your screen, asks Claude via your own API key)\n- Typing Test applies half the measured typo rate\n- Note: the Learn tab's screen-capture can trip Windows Smart App Control; it needs SAC off or a signed build\n\n1.14.1\n- Status light (yellow = update ready, red = error), robust updater"
+  "sha256": "188752ad1a3b1d777708f0ba8fbf825b36151e50dadcb8418ba8fa9b9adf8a4e",
+  "notes": "1.14.4\n- Learn tab now shows a clear notice: all prompts are paid (your Anthropic API credits), even with a subscription or plan\n\n1.14.3\n- Learn tab back, typing test applies half the measured typo rate"
 }
