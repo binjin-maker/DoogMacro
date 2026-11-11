@@ -1,7 +1,7 @@
 {
-  "version": "1.15.31",
+  "version": "1.15.32",
   "minRun": "1.15.31",
   "url": "https://raw.githubusercontent.com/binjin-maker/DoogMacro/main/update/FrutigerMacroCracked.exe",
-  "sha256": "c24d09d8714adb05235279786ccff501bfe5484944d767b129b5c63dc5a0adfb",
-  "notes": "1.15.31\n- First release of FrutigerMacroCracked: blue eye, Kernel mode toggle on the Update tab, own update channel"
+  "sha256": "18cd103978119f1a605cd4b6a36619f9c6d09add3be326c31258213d9123b509",
+  "notes": "1.15.32\n- Removed the Learn tab\n\n1.15.31\n- First release of FrutigerMacroCracked: blue eye, Kernel mode toggle on the Update tab, own update channel"
 }
