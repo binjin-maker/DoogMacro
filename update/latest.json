@@ -1,7 +1,7 @@
 {
-  "version": "1.15.28",
+  "version": "1.15.29",
   "minRun": "1.15.7",
   "url": "https://raw.githubusercontent.com/binjin-maker/DoogMacro/main/update/FrutigerMacro.exe",
-  "sha256": "b0d0771d7aa6bfc4c50d7683b823464e7aebfc9f668b262afb275be7603d299c",
-  "notes": "1.15.28\n- New Checkpoints option: auto-type stops after each paragraph so you can review it and tweak settings, then press Resume to continue\n\n1.15.27\n- Nicer glass buttons on the terms and notice screens"
+  "sha256": "d91a316eeee396dbbfc042169d8419172004b303734a0b20c115bfb70b62fb3f",
+  "notes": "1.15.29\n- New Auto-resume box: with Checkpoints on, typing continues by itself after the number of seconds you set (up to 30). 0 = wait for you to press Resume\n\n1.15.28\n- New Checkpoints option: auto-type stops after each paragraph so you can review it"
 }
