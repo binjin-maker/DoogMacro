@@ -1,7 +1,7 @@
 {
-  "version": "1.15.25",
+  "version": "1.15.26",
   "minRun": "1.15.7",
   "url": "https://raw.githubusercontent.com/binjin-maker/DoogMacro/main/update/FrutigerMacro.exe",
-  "sha256": "4ce2c99deaf50abc8810eec2b05dbf4f1fddc18dd2c9b1905d8534bfcf25b81c",
-  "notes": "1.15.25\n- Read+Type no longer adds extra blank lines or indents: paragraph spacing and indentation are left exactly as they are, only real text changes get fixed"
+  "sha256": "65cc0fa9a19909f724fb05914e7180d8c21185f0320dd1a2edd22ddaed8be6cc",
+  "notes": "1.15.26\n- New terms of use: you'll be asked to agree before using FrutigerMacro\n- Every copy now has its own Copy ID (Update tab)\n- The status bar shows whether the Humanizer is writing, fixing or resting, and whether Read & Type is working, fixing or writing\n- Stability and Security improvements"
 }

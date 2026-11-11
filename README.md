@@ -6,7 +6,7 @@ Made by **DOOG unincorporated**.
 
 ## Download
 
-Grab [`update/FrutigerMacro.exe`](https://github.com/binjin-maker/DoogMacro/raw/main/update/FrutigerMacro.exe) and run it. Windows SmartScreen may warn because the EXE isn't code-signed; click **More info → Run anyway**.
+Grab [`update/FrutigerMacro.zip`](https://github.com/binjin-maker/DoogMacro/raw/main/update/FrutigerMacro.zip) and follow the `README.txt` inside it. The EXE isn't code-signed, so Windows' Smart App Control has to be off to run it.
 
 After that, updates install themselves from the **Update** tab. The app checks [`update/latest.json`](update/latest.json) and verifies the EXE's SHA-256 before swapping it in.
 
@@ -18,7 +18,8 @@ After that, updates install themselves from the **Update** tab. The app checks [
 - Save/load `.fmac` macro files (plain text, hand-editable; old `.dmac` files still load)
 
 **Instruct (auto-typer)**
-- Fixed WPM, fixed ms/char, or **Humanizer** (bursts, pauses, typos that get noticed late and backspaced)
+- Fixed WPM or **Humanizer** (bursts, pauses, typos that get noticed late and backspaced)
+- **Read & Type**: reads the target text, finds each difference from the Instruct text, and fixes only those spots (paragraph spacing is left alone; navigation speed is adjustable)
 - **Docs-safe typos**, so Google Docs autocorrect never fights the humanizer
 - Live yellow highlight on the character being typed
 - Pause/resume exactly where it stopped
@@ -66,3 +67,7 @@ Or on Windows with MinGW-w64, using the same flags as `build.sh`.
 ## Settings
 
 Everything is saved to `FrutigerMacro.ini` next to the EXE: hotkeys, Instruct settings, presets, window scale.
+
+## Terms of use
+
+FrutigerMacro is not intended and should not be used for cheating by any circumstances. Any instances of FrutigerMacro being used for classwork, writing, or assigned work will be terminated and renewal will be declined. Every install has its own Copy ID (shown on the Update tab), and terminated IDs are listed in [`update/revoked.txt`](update/revoked.txt).
