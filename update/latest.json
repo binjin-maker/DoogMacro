@@ -1,7 +1,7 @@
 {
-  "version": "1.15.17",
+  "version": "1.15.18",
   "minRun": "1.15.7",
   "url": "https://raw.githubusercontent.com/binjin-maker/DoogMacro/main/update/FrutigerMacro.exe",
-  "sha256": "0fcac55a16938189cb89179aa4a98765bb31d3927293dd6c68e55dd61c943890",
-  "notes": "1.15.17\n- Read+Type reads reliably: retries the copy (Docs drops the first one), uses scancode keys, and warns if the app still has focus\n- Read+Type now applies edits directly (no humanizer/typos) — it's a clean auto-editor"
+  "sha256": "502885bdd8c201143840bdfbb5239cee05a8e3f639d18d414220fffc61f4df4f",
+  "notes": "1.15.18\n- Read+Type now reads two ways: a direct clipboard-free reader (Notepad, Word, most text boxes) with automatic clipboard fallback for canvas apps like Google Docs"
 }
