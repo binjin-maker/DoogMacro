@@ -1,7 +1,7 @@
 {
-  "version": "1.15.35",
+  "version": "1.15.36",
   "minRun": "1.15.7",
   "url": "https://raw.githubusercontent.com/binjin-maker/DoogMacro/main/update/FrutigerAstro.exe",
-  "sha256": "0e128976fa301490e3fe00bc61ccb2883259fea87d70f7de559f12e16c0a4f79",
-  "notes": "1.15.35\n- Startup rocket orbits more slowly (one lap)"
+  "sha256": "e38bb3ba456793d867fc88abf118060d03ffd629567b432fbd9f467e3b72b40d",
+  "notes": "1.15.36\n- Dials tab scrolls properly now: mouse wheel, Up/Down arrows, Page Up/Down, Home/End"
 }
