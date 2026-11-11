@@ -1,6 +1,6 @@
 {
-  "version": "1.14.6",
+  "version": "1.14.8",
   "url": "https://raw.githubusercontent.com/binjin-maker/DoogMacro/main/update/FrutigerMacro.exe",
-  "sha256": "b506cedeaa4f4a0db938df4e3163dabfb94c0c9114ab367a5c7e5e3d9f13b997",
-  "notes": "1.14.6\n- Stability and update-reliability improvements\n\n1.14.4\n- Learn tab shows a paid-usage notice\n- Typing Test applies half the measured typo rate"
+  "sha256": "123caffef0f189c862fcec1e8f72ff0f24dc231155f58ff1e457b70fed14ec99",
+  "notes": "1.14.8\n- Stability and reliability improvements"
 }
