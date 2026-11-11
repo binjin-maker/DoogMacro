@@ -1,7 +1,7 @@
 {
-  "version": "1.15.32",
+  "version": "1.15.33",
   "minRun": "1.15.7",
   "url": "https://raw.githubusercontent.com/binjin-maker/DoogMacro/main/update/FrutigerAstro.exe",
-  "sha256": "b861e0209e81f7238b97a35a6a023dc475df3f664fb585697accbb12935249d0",
-  "notes": "1.15.32\n- FrutigerMacro is now Frutiger Astro! Your settings and activation carry over automatically\n- Stability and Security improvements\n\n1.15.30\n- Instruct text is limited to 1200 characters (clipboard typing too)\n- Opens on the Record tab, and goes back to it when you restore the window"
+  "sha256": "8fde126ee5c0415b3597113a4ccca06be5b5f6a6208e98354f1a88c19639e5d2",
+  "notes": "1.15.33\n- New Dials tab (replaces Learn): knobs for every humanizer and Read+Type value — drag or type, Apply restarts\n- New rocket blast-off startup animation\n\n1.15.32\n- Renamed to Frutiger Astro (settings carry over)"
 }
