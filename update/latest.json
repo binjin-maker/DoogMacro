@@ -1,7 +1,7 @@
 {
-  "version": "1.15.24",
+  "version": "1.15.25",
   "minRun": "1.15.7",
   "url": "https://raw.githubusercontent.com/binjin-maker/DoogMacro/main/update/FrutigerMacro.exe",
-  "sha256": "d6a90c5979d3077367eb7e8afbadfaa93dca6b67a5e08cbd2d618112aa2b944c",
-  "notes": "1.15.24\n- Read+Type finds every separate change and fixes each one on its own, instead of rewriting everything between the first and last change"
+  "sha256": "4ce2c99deaf50abc8810eec2b05dbf4f1fddc18dd2c9b1905d8534bfcf25b81c",
+  "notes": "1.15.25\n- Read+Type no longer adds extra blank lines or indents: paragraph spacing and indentation are left exactly as they are, only real text changes get fixed"
 }
