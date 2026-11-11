@@ -1,7 +1,7 @@
 {
-  "version": "1.15.36",
+  "version": "1.15.37",
   "minRun": "1.15.7",
   "url": "https://raw.githubusercontent.com/binjin-maker/DoogMacro/main/update/FrutigerAstro.exe",
-  "sha256": "e38bb3ba456793d867fc88abf118060d03ffd629567b432fbd9f467e3b72b40d",
-  "notes": "1.15.36\n- Dials tab scrolls properly now: mouse wheel, Up/Down arrows, Page Up/Down, Home/End"
+  "sha256": "fd84d8b47b0c1b74512bca8e0e9093c6a3446cfa7210cf20fc93667e28777621",
+  "notes": "1.15.37\n- Startup animation back to the classic eye"
 }
