@@ -1,6 +1,6 @@
 {
-  "version": "1.14.10",
+  "version": "1.15.0",
   "url": "https://raw.githubusercontent.com/binjin-maker/DoogMacro/main/update/FrutigerMacro.exe",
-  "sha256": "5b4b8e944fd063857ff6e1ce5c0aa15c7f647d9aff58f74e8a244368e0f1d36b",
-  "notes": "1.14.10\n- Stability and Security improvements"
+  "sha256": "8ba9b59cb263747e62238655a28e26668f14085cfb15b667804b92b65a9f58b9",
+  "notes": "1.15.0\n- New Aero tab: give your whole desktop a Vista / 7 Frutiger Aero look (aurora wallpaper, Aero-blue accent, window transparency, Light theme). Fully reversible with one button.\n- Warning: it changes Windows-wide settings; some may need a sign-out to fully show. Revert restores what you had.\n- Stability and Security improvements"
 }
