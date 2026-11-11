@@ -1,7 +1,7 @@
 {
-  "version": "1.15.15",
+  "version": "1.15.16",
   "minRun": "1.15.7",
   "url": "https://raw.githubusercontent.com/binjin-maker/DoogMacro/main/update/FrutigerMacro.exe",
-  "sha256": "7264ed91ec49f3318b7a97ec4470470fb8db22afaa025373790baf44cad00da3",
-  "notes": "1.15.15\n- Read+Type reliably reads Google Docs: retries the locked clipboard and waits for the copy to actually commit before doing anything"
+  "sha256": "1b4dd2da3b689d076e430235b3912e35152b06186dfae36799df39122c8c8e55",
+  "notes": "1.15.16\n- Read+Type now erases the old characters one by one and humanizer-types the replacement, like a typo fix\n- Finds the changed spot from the end of the doc, so it no longer stalls walking long documents"
 }
