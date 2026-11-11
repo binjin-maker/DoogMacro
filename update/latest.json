@@ -1,7 +1,7 @@
 {
-  "version": "1.15.31",
+  "version": "1.15.32",
   "minRun": "1.15.7",
-  "url": "https://raw.githubusercontent.com/binjin-maker/DoogMacro/main/update/FrutigerMacro.exe",
-  "sha256": "f6332a04ed4b54edd5db356682895ed714b5eefdfa91c3fa1c80de113d656305",
-  "notes": "1.15.31\n- Stability and Security improvements\n\n1.15.30\n- Instruct text is limited to 1200 characters (clipboard typing too)\n- Opens on the Record tab, and goes back to it when you restore the window from minimized"
+  "url": "https://raw.githubusercontent.com/binjin-maker/DoogMacro/main/update/FrutigerAstro.exe",
+  "sha256": "b861e0209e81f7238b97a35a6a023dc475df3f664fb585697accbb12935249d0",
+  "notes": "1.15.32\n- FrutigerMacro is now Frutiger Astro! Your settings and activation carry over automatically\n- Stability and Security improvements\n\n1.15.30\n- Instruct text is limited to 1200 characters (clipboard typing too)\n- Opens on the Record tab, and goes back to it when you restore the window"
 }

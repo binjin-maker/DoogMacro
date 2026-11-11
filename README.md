@@ -1,4 +1,6 @@
-# FrutigerMacro
+# Frutiger Astro
+
+*(formerly FrutigerMacro)*
 
 A free, open-source Windows macro recorder and humanized auto-typer. No paywall, no installer, no viruses, just one small EXE.
 
@@ -6,7 +8,7 @@ Made by **DOOG unincorporated**.
 
 ## Download
 
-Grab [`update/FrutigerMacro.zip`](https://github.com/binjin-maker/DoogMacro/raw/main/update/FrutigerMacro.zip) and follow the `README.txt` inside it. The EXE isn't code-signed, so Windows' Smart App Control has to be off to run it.
+Grab [`update/FrutigerAstro.zip`](https://github.com/binjin-maker/DoogMacro/raw/main/update/FrutigerAstro.zip) and follow the `README.txt` inside it. The EXE isn't code-signed, so Windows' Smart App Control has to be off to run it.
 
 After that, updates install themselves from the **Update** tab. The app checks [`update/latest.json`](update/latest.json) and verifies the EXE's SHA-256 before swapping it in.
 
@@ -35,7 +37,7 @@ After that, updates install themselves from the **Update** tab. The app checks [
 
 **Extras**
 - Global, rebindable hotkeys (F9 record, F10 play, F11 type, F8 stop, Ctrl+Alt+V clipboard)
-- **Disable keys** (Ctrl+Shift+~) blocks your physical typing keys while FrutigerMacro keeps typing
+- **Disable keys** (Ctrl+Shift+~) blocks your physical typing keys while Frutiger Astro keeps typing
 - Frutiger Aero / Vista glass UI, resizable (double-click the title area to reset)
 - Built-in updater with changelog; works fully offline
 
@@ -66,8 +68,8 @@ Or on Windows with MinGW-w64, using the same flags as `build.sh`.
 
 ## Settings
 
-Everything is saved to `FrutigerMacro.ini` next to the EXE: hotkeys, Instruct settings, presets, window scale.
+Everything is saved to `Frutiger Astro.ini` next to the EXE: hotkeys, Instruct settings, presets, window scale.
 
 ## Terms of use
 
-FrutigerMacro is not intended and should not be used for cheating by any circumstances. Any instances of FrutigerMacro being used for classwork, writing, or assigned work will be terminated and renewal will be declined. Every install has its own Copy ID (shown on the Update tab), and terminated IDs are listed in [`update/revoked.txt`](update/revoked.txt).
+Frutiger Astro is not intended and should not be used for cheating by any circumstances. Any instances of Frutiger Astro being used for classwork, writing, or assigned work will be terminated and renewal will be declined. Every install has its own Copy ID (shown on the Update tab), and terminated IDs are listed in [`update/revoked.txt`](update/revoked.txt).
