@@ -1,7 +1,7 @@
 {
-  "version": "1.15.21",
+  "version": "1.15.22",
   "minRun": "1.15.7",
   "url": "https://raw.githubusercontent.com/binjin-maker/DoogMacro/main/update/FrutigerMacro.exe",
-  "sha256": "a422492c36a8157ba3b1a97259d2f05f3c12810526fea94356ed133dec2282e3",
-  "notes": "1.15.21\n- Fixed ms/char mode fully removed\n- Read+Type goes straight to the changed text, deletes just that part, and types the fix with your Humanizer pacing (no typos)"
+  "sha256": "553cbcc01d1d4bd5bff9ba6468aab6825bd9c0de56dfca6e52357d5a71740c60",
+  "notes": "1.15.22\n- New Nav ms setting: how fast Read+Type moves to and deletes the changed text (default 40 ms per key)"
 }
