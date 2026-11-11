@@ -1,7 +1,7 @@
 {
-  "version": "1.15.26",
+  "version": "1.15.27",
   "minRun": "1.15.7",
   "url": "https://raw.githubusercontent.com/binjin-maker/DoogMacro/main/update/FrutigerMacro.exe",
-  "sha256": "65cc0fa9a19909f724fb05914e7180d8c21185f0320dd1a2edd22ddaed8be6cc",
-  "notes": "1.15.26\n- New terms of use: you'll be asked to agree before using FrutigerMacro\n- Every copy now has its own Copy ID (Update tab)\n- The status bar shows whether the Humanizer is writing, fixing or resting, and whether Read & Type is working, fixing or writing\n- Stability and Security improvements"
+  "sha256": "d82dc23890124060e34ed25ab236f791618058f1a49695cda08b83143b857f66",
+  "notes": "1.15.27\n- Nicer glass buttons on the terms and notice screens, with hover and press effects\n\n1.15.26\n- New terms of use: you'll be asked to agree before using FrutigerMacro\n- Every copy now has its own Copy ID (Update tab)\n- Status bar shows writing / fixing / resting\n- Stability and Security improvements"
 }
