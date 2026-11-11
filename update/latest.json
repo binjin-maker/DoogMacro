@@ -1,7 +1,7 @@
 {
-  "version": "1.15.27",
+  "version": "1.15.28",
   "minRun": "1.15.7",
   "url": "https://raw.githubusercontent.com/binjin-maker/DoogMacro/main/update/FrutigerMacro.exe",
-  "sha256": "d82dc23890124060e34ed25ab236f791618058f1a49695cda08b83143b857f66",
-  "notes": "1.15.27\n- Nicer glass buttons on the terms and notice screens, with hover and press effects\n\n1.15.26\n- New terms of use: you'll be asked to agree before using FrutigerMacro\n- Every copy now has its own Copy ID (Update tab)\n- Status bar shows writing / fixing / resting\n- Stability and Security improvements"
+  "sha256": "b0d0771d7aa6bfc4c50d7683b823464e7aebfc9f668b262afb275be7603d299c",
+  "notes": "1.15.28\n- New Checkpoints option: auto-type stops after each paragraph so you can review it and tweak settings, then press Resume to continue\n\n1.15.27\n- Nicer glass buttons on the terms and notice screens"
 }
