@@ -1,7 +1,7 @@
 {
-  "version": "1.15.23",
+  "version": "1.15.24",
   "minRun": "1.15.7",
   "url": "https://raw.githubusercontent.com/binjin-maker/DoogMacro/main/update/FrutigerMacro.exe",
-  "sha256": "f397922c1a24ac21edd0b1079e89a75b40df44f41ea3dc0c4f1482a19ad1a859",
-  "notes": "1.15.23\n- Updates show up the moment they're published (no more waiting on GitHub's cache)\n- Update downloads always match their checksum\n\n1.15.22\n- New Nav ms setting: how fast Read+Type moves to and deletes the changed text"
+  "sha256": "d6a90c5979d3077367eb7e8afbadfaa93dca6b67a5e08cbd2d618112aa2b944c",
+  "notes": "1.15.24\n- Read+Type finds every separate change and fixes each one on its own, instead of rewriting everything between the first and last change"
 }
