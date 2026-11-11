@@ -1,7 +1,7 @@
 {
-  "version": "1.15.20",
+  "version": "1.15.21",
   "minRun": "1.15.7",
   "url": "https://raw.githubusercontent.com/binjin-maker/DoogMacro/main/update/FrutigerMacro.exe",
-  "sha256": "d034752053375fe4f65e4b81694089139cc09cddadf3c467e2001268e362e2b5",
-  "notes": "1.15.20\n- Read+Type goes straight to the changed text, deletes just that part, and types the fix with your Humanizer pacing (no typos)\n- Ignores Docs' extra line breaks, special spaces and curly quotes when comparing\n- Removed the Fixed ms/char mode"
+  "sha256": "a422492c36a8157ba3b1a97259d2f05f3c12810526fea94356ed133dec2282e3",
+  "notes": "1.15.21\n- Fixed ms/char mode fully removed\n- Read+Type goes straight to the changed text, deletes just that part, and types the fix with your Humanizer pacing (no typos)"
 }
