@@ -1,7 +1,7 @@
 {
-  "version": "1.15.9",
+  "version": "1.15.10",
   "minRun": "1.15.7",
   "url": "https://raw.githubusercontent.com/binjin-maker/DoogMacro/main/update/FrutigerMacro.exe",
-  "sha256": "16441db87277e6274b24a60e7261fdfb06b1a54bf64cd283a0f74b9437fb408e",
-  "notes": "1.15.9\n- Fixed the update/lock overlay: controls no longer stay bright over the shade"
+  "sha256": "a30cae53e23b970b6c7d4204df54d15bda4705186b669a781dceb29be69c4c3a",
+  "notes": "Updated Version."
 }
