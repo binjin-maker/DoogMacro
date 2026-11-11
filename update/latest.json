@@ -1,7 +1,7 @@
 {
-  "version": "1.15.16",
+  "version": "1.15.17",
   "minRun": "1.15.7",
   "url": "https://raw.githubusercontent.com/binjin-maker/DoogMacro/main/update/FrutigerMacro.exe",
-  "sha256": "1b4dd2da3b689d076e430235b3912e35152b06186dfae36799df39122c8c8e55",
-  "notes": "1.15.16\n- Read+Type now erases the old characters one by one and humanizer-types the replacement, like a typo fix\n- Finds the changed spot from the end of the doc, so it no longer stalls walking long documents"
+  "sha256": "0fcac55a16938189cb89179aa4a98765bb31d3927293dd6c68e55dd61c943890",
+  "notes": "1.15.17\n- Read+Type reads reliably: retries the copy (Docs drops the first one), uses scancode keys, and warns if the app still has focus\n- Read+Type now applies edits directly (no humanizer/typos) — it's a clean auto-editor"
 }
