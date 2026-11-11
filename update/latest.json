@@ -1,7 +1,7 @@
 {
-  "version": "1.15.34",
+  "version": "1.15.35",
   "minRun": "1.15.7",
   "url": "https://raw.githubusercontent.com/binjin-maker/DoogMacro/main/update/FrutigerAstro.exe",
-  "sha256": "54acf46a373492902f36d9558296ecd44df985bf74de3f74ddc3bd7c162613a1",
-  "notes": "1.15.34\n- Startup rocket now orbits in a circle at a steady speed, trailing smoke\n\n1.15.33\n- New Dials tab (replaces Learn): knobs for every humanizer and Read+Type value\n- Rocket startup animation"
+  "sha256": "0e128976fa301490e3fe00bc61ccb2883259fea87d70f7de559f12e16c0a4f79",
+  "notes": "1.15.35\n- Startup rocket orbits more slowly (one lap)"
 }
