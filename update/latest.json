@@ -1,6 +1,6 @@
 {
-  "version": "1.14.1",
+  "version": "1.14.2",
   "url": "https://raw.githubusercontent.com/binjin-maker/DoogMacro/main/update/FrutigerMacro.exe",
-  "sha256": "b959c2dc93de56c260b2305af7625b262d3425b082d82bff7092c1bfe23e5092",
-  "notes": "1.14.1\n- Removed the Learn tab (its screen-capture + upload tripped Windows Smart App Control / antivirus)\n- Kept the status light (yellow = update ready, red = error) and the more robust updater\n\n1.13.2\n- Black Frutiger Aero logo\n\n1.12.2\n- Repo-based updater, Update tab, resizable window, Disable keys, Magic Type"
+  "sha256": "fb101ee9d71fe756a6006f3a6f2009c6d1471c9c83f99d4a45d60f536fbda2fd",
+  "notes": "1.14.2\n- Typing Test now reports/applies half the measured typo rate (fewer, more realistic typos)\n\n1.14.1\n- Removed the Learn tab (tripped Smart App Control)\n- Status light (yellow = update ready, red = error), robust updater"
 }

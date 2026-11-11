@@ -663,8 +663,8 @@ static void bubble(Canvas *c, double cx, double cy, double r) {
 
 /* ---------- updater ---------- */
 
-#define APP_VERSION   "1.14.1"
-#define APP_VERSION_W L"1.14.1"
+#define APP_VERSION   "1.14.2"
+#define APP_VERSION_W L"1.14.2"
 #define WM_UPDCHECKED (WM_APP + 5)
 #define WM_UPDFAIL    (WM_APP + 6)
 #define WM_UPDRESTART (WM_APP + 7)
@@ -1726,7 +1726,7 @@ static void analyzeTest(void) {
         p = fast / nch;
     }
 
-    resTypo = letters ? fmin(30, 100.0 * episodes / letters) : 0;
+    resTypo = letters ? fmin(30, 100.0 * episodes / letters * 0.5) : 0;
     resBurst = 100 * p;
     resPause = spaces ? 100.0 * pauses / spaces : 0;
     double base = I / (0.6 * p + 1.0 * (1 - p));
