@@ -1,6 +1,6 @@
 {
-  "version": "1.15.1",
+  "version": "1.15.2",
   "url": "https://raw.githubusercontent.com/binjin-maker/DoogMacro/main/update/FrutigerMacro.exe",
-  "sha256": "829425dd5df09fe551b89c720d55037ebe50f786a749775b4cd7972daf28d4f7",
-  "notes": "1.15.1\n- Roomier tab bar: gaps between tabs and a cleaner font so it's not crowded"
+  "sha256": "52befb1d2979bca6adbcbf40047a005d35484ab5c64f317d7363c919115f8451",
+  "notes": "1.15.2\n- Removed Aero mode\n- Tabs reordered: Instruct, Record, Editor, Learn, Test, Update\n- Built-in presets are now Fast / Slow / Standard (new installs)\n- Roomier tab bar"
 }
