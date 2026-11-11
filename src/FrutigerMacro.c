@@ -669,8 +669,8 @@ static void bubble(Canvas *c, double cx, double cy, double r) {
 
 /* ---------- updater ---------- */
 
-#define APP_VERSION   "1.14.4"
-#define APP_VERSION_W L"1.14.4"
+#define APP_VERSION   "1.14.5"
+#define APP_VERSION_W L"1.14.5"
 #define WM_UPDCHECKED (WM_APP + 5)
 #define WM_UPDFAIL    (WM_APP + 6)
 #define WM_UPDRESTART (WM_APP + 7)
@@ -2827,8 +2827,9 @@ static LRESULT CALLBACK WndProc(HWND h, UINT m, WPARAM wp, LPARAM lp) {
         return 0;
     case WM_UPDFAIL: {
         wchar_t *m = (wchar_t *)lp;
-        updErr = 1; wcsncpy(updConnMsg, m, 159); updConnMsg[159] = 0;
-        status(L"%s", m); free(m); InvalidateRect(h, NULL, FALSE);
+        updErr = 1;
+        _snwprintf(updConnMsg, 159, L"%s  Try restarting the macro.", m); updConnMsg[159] = 0;
+        status(L"%s  Try restarting the macro.", m); free(m); InvalidateRect(h, NULL, FALSE);
     } return 0;
     case WM_LEARNSHOW:
         ShowWindow(hFrame, SW_SHOW); SetForegroundWindow(hFrame);

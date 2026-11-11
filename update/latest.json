@@ -1,6 +1,6 @@
 {
-  "version": "1.14.4",
+  "version": "1.14.5",
   "url": "https://raw.githubusercontent.com/binjin-maker/DoogMacro/main/update/FrutigerMacro.exe",
-  "sha256": "188752ad1a3b1d777708f0ba8fbf825b36151e50dadcb8418ba8fa9b9adf8a4e",
-  "notes": "1.14.4\n- Learn tab now shows a clear notice: all prompts are paid (your Anthropic API credits), even with a subscription or plan\n\n1.14.3\n- Learn tab back, typing test applies half the measured typo rate"
+  "sha256": "a1e3bc7f0ab3b7be7e9b667cff24746c3558e39a9eaa877c7ed4fab46b881333",
+  "notes": "1.14.5\n- Failed updates now show a hint: “Try restarting the macro.”\n\n1.14.4\n- Learn tab shows a paid-usage notice"
 }
