@@ -1,7 +1,7 @@
 {
-  "version": "1.15.19",
+  "version": "1.15.20",
   "minRun": "1.15.7",
   "url": "https://raw.githubusercontent.com/binjin-maker/DoogMacro/main/update/FrutigerMacro.exe",
-  "sha256": "b2d418740e786ab7d1056cde815a38fe3e78b0a1de65874d3565833bd765bc7d",
-  "notes": "1.15.19\n- Read+Type works in Google Docs: ignores Docs' hidden input box and uses the clipboard instead\n- Read+Type's result message now stays in the status bar instead of resetting to Idle"
+  "sha256": "d034752053375fe4f65e4b81694089139cc09cddadf3c467e2001268e362e2b5",
+  "notes": "1.15.20\n- Read+Type goes straight to the changed text, deletes just that part, and types the fix with your Humanizer pacing (no typos)\n- Ignores Docs' extra line breaks, special spaces and curly quotes when comparing\n- Removed the Fixed ms/char mode"
 }
