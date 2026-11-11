@@ -1,8 +1,6 @@
 #define UNICODE
 #define _UNICODE
 #define WIN32_LEAN_AND_MEAN
-#define CINTERFACE
-#define COBJMACROS
 #include <windows.h>
 #include <commctrl.h>
 #include <commdlg.h>
@@ -14,9 +12,6 @@
 #include <wininet.h>
 #include <bcrypt.h>
 #include <shellapi.h>
-#include <ole2.h>
-#include <objidl.h>
-#include <wincrypt.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -42,7 +37,6 @@ enum { ID_REC = 101, ID_STOP, ID_PLAY, ID_SAVE, ID_LOAD, ID_CLEAR, ID_REPEAT, ID
        ID_LIST = 601, ID_EDELAY, ID_EEVENT, ID_EARGS, ID_EUPD, ID_EINS, ID_EDEL, ID_EUP, ID_EDOWN,
        ID_ESCALE, ID_ESCALEGO, ID_ESTRIP, ID_ESAVE, ID_PRESET, ID_PSAVE, ID_PDEL,
        ID_UCHECK = 701, ID_UINSTALL, ID_UPAGE, ID_KBLOCK, ID_MAGIC, ID_UNOTES,
-       ID_LAPIKEY = 801, ID_LMODEL, ID_LQ, ID_LGO, ID_LOUT, ID_LCOPY, ID_LCLR,
        ID_TEST = 501, ID_TRESTART, ID_TCLEAR, ID_TNEW, ID_TFIN, ID_TAPPLY, ID_TCLOSE, ID_TEDIT,
        ID_HK0 = 301, ID_HK1, ID_HK2, ID_HK3, ID_HKAPPLY, ID_STATUS = 400 };
 
@@ -669,8 +663,8 @@ static void bubble(Canvas *c, double cx, double cy, double r) {
 
 /* ---------- updater ---------- */
 
-#define APP_VERSION   "1.14.0"
-#define APP_VERSION_W L"1.14.0"
+#define APP_VERSION   "1.14.1"
+#define APP_VERSION_W L"1.14.1"
 #define WM_UPDCHECKED (WM_APP + 5)
 #define WM_UPDFAIL    (WM_APP + 6)
 #define WM_UPDRESTART (WM_APP + 7)
@@ -884,7 +878,6 @@ static DWORD WINAPI InstallThread(LPVOID unused) {
     if (f != INVALID_HANDLE_VALUE) CloseHandle(f);
     free(b);
     if (!ok) { DeleteFileW(newPath); updFail(L"Couldn't write the update next to the EXE — the folder may be write-protected."); return 0; }
-    /* pick a backup name that is free (or a stale one we can delete) */
     int chosen = 0;
     for (int slot = 0; slot < 64 && !chosen; slot++) {
         if (slot == 0) swprintf(oldPath, MAX_PATH + 16, L"%s.old", exePath);
@@ -954,8 +947,8 @@ static int connColor(void) {
 
 /* ---------- pages, layout, painting ---------- */
 
-enum { PG_MACRO, PG_INSTR, PG_EDIT, PG_TEST, PG_UPDATE, PG_LEARN, PG_N, PG_GLOBAL = -1 };
-static const wchar_t *TABNAME[PG_N] = { L"Recorder", L"Instruct", L"Editor", L"Test", L"Update", L"Learn" };
+enum { PG_MACRO, PG_INSTR, PG_EDIT, PG_TEST, PG_UPDATE, PG_N, PG_GLOBAL = -1 };
+static const wchar_t *TABNAME[PG_N] = { L"Recorder", L"Instruct", L"Editor", L"Test", L"Update" };
 static int curPage = PG_INSTR, tabHover = -1;
 
 static Canvas pageC[PG_N], backC;
@@ -1011,14 +1004,12 @@ static const Lbl LBLS[] = {
     { L"Record:", PG_GLOBAL, 20, 403, 62 }, { L"Play:", PG_GLOBAL, 222, 403, 62 },
     { L"Auto-type:", PG_GLOBAL, 20, 431, 62 }, { L"Stop all:", PG_GLOBAL, 222, 431, 62 },
     { L"Clipboard:", PG_GLOBAL, 20, 459, 62 },
-    { L"API key:", PG_LEARN, 20, 77, 68 }, { L"Model:", PG_LEARN, 20, 103, 68 },
-    { L"What to ask Claude (optional):", PG_LEARN, 20, 128, 320 }, { L"Claude's answer:", PG_LEARN, 20, 253, 220 },
     { L"Preset:", PG_INSTR, 20, 191, 44 },
     { L"Delay:", PG_EDIT, 20, 251, 40 }, { L"Event:", PG_EDIT, 124, 251, 40 }, { L"Args:", PG_EDIT, 266, 251, 32 },
     { L"Scale delays ×", PG_EDIT, 20, 319, 88 },
 };
 
-static int onPage(int tag, int p) { return tag == p || (tag == PG_GLOBAL && p != PG_TEST && p != PG_LEARN); }
+static int onPage(int tag, int p) { return tag == p || (tag == PG_GLOBAL && p != PG_TEST); }
 
 static void renderSky(Canvas *c) {
     int W = c->w, H = c->h;
@@ -1067,8 +1058,7 @@ static void renderPages(void) {
         if (p == PG_INSTR || p == PG_EDIT) glassPanel(c, 10, 48, 420, 320);
         if (p == PG_UPDATE) { glassPanel(c, 10, 48, 420, 320); inset(c, 20, 72, 400, 84); inset(c, 20, 164, 400, 126); }
         if (p == PG_TEST) { glassPanel(c, 10, 48, 420, 490); inset(c, 20, 90, 400, 104); inset(c, 20, 320, 400, 160); }
-        if (p == PG_LEARN) { glassPanel(c, 10, 48, 420, 490); inset(c, 20, 146, 400, 72); inset(c, 20, 272, 400, 236); }
-        if (p != PG_TEST && p != PG_LEARN) { glassPanel(c, 10, 378, 420, 112); glassPanel(c, 10, 498, 420, 40); }
+        if (p != PG_TEST) { glassPanel(c, 10, 378, 420, 112); glassPanel(c, 10, 498, 420, 40); }
         SetBkMode(dc, TRANSPARENT);
         if (p == PG_MACRO) textAt(dc, hTitle, L"Macro Recorder", 20, 50, 300, 18, NAVY, DT_LEFT | DT_SINGLELINE);
         if (p == PG_INSTR) {
@@ -1078,10 +1068,6 @@ static void renderPages(void) {
         if (p == PG_UPDATE) {
             textAt(dc, hTitle, L"Updates", 20, 50, 300, 18, NAVY, DT_LEFT | DT_SINGLELINE);
             textAt(dc, hSmall, L"pulled from GitHub · works offline", 200, 53, 220, 16, HINT, DT_RIGHT | DT_SINGLELINE);
-        }
-        if (p == PG_LEARN) {
-            textAt(dc, hTitle, L"Learn", 20, 50, 300, 18, NAVY, DT_LEFT | DT_SINGLELINE);
-            textAt(dc, hSmall, L"press Learn — it reads your screen and asks Claude", 180, 53, 240, 16, HINT, DT_RIGHT | DT_SINGLELINE);
         }
         if (p == PG_EDIT) {
             textAt(dc, hTitle, L"Macro Editor", 20, 50, 300, 18, NAVY, DT_LEFT | DT_SINGLELINE);
@@ -1096,7 +1082,7 @@ static void renderPages(void) {
             textAt(dc, hSmall, L"Apply fills WPM, Typo %, Burst % and Pause % in Instruct and switches to Humanizer. Paste is off here.",
                    20, 520, 400, 16, HINT, DT_LEFT | DT_SINGLELINE);
         }
-        if (p != PG_TEST && p != PG_LEARN) {
+        if (p != PG_TEST) {
             textAt(dc, hTitle, L"Hotkeys (global)", 20, 380, 300, 18, NAVY, DT_LEFT | DT_SINGLELINE);
             textAt(dc, hSmall, L"click a box, press the combo, then Apply", 200, 383, 220, 16, HINT, DT_RIGHT | DT_SINGLELINE);
         }
@@ -1141,7 +1127,7 @@ static void gelText(HDC dc, const wchar_t *t, RECT tr, const BtnPal *p, int pres
     DrawTextW(dc, t, -1, &tr, DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_END_ELLIPSIS);
 }
 
-static RECT tabRect(int i) { return RS(13 + i * 69, 12, 67, 24); }
+static RECT tabRect(int i) { return RS(16 + i * 82, 12, 78, 24); }
 
 static void drawTabs(Canvas *c) {
     for (int i = 0; i < PG_N; i++) {
@@ -1259,7 +1245,7 @@ static void paintMain(HDC hdc) {
     if (curPage == PG_TEST) {
         textAt(dc, hPrompt, PROMPTS[promptIdx], 30, 97, 380, 92, NAVY, DT_LEFT | DT_WORDBREAK);
         textAt(dc, hFont, testResult, 32, 330, 376, 144, NAVY, DT_LEFT | DT_WORDBREAK);
-    } else if (curPage != PG_LEARN) {
+    } else {
         textAt(dc, hFont, statusText, 22, 502, 290, 34, NAVY, DT_LEFT | DT_WORDBREAK | DT_VCENTER | DT_END_ELLIPSIS);
     }
     BitBlt(hdc, 0, 0, src->w, src->h, dc, 0, 0, SRCCOPY);
@@ -1282,7 +1268,7 @@ static void drawButton(DRAWITEMSTRUCT *d) {
     UINT id = d->CtlID;
     const BtnPal *p = (id == ID_REC || id == ID_EDEL || id == ID_PDEL || (id == ID_KBLOCK && kbBlocked) || (id == ID_MAGIC && magicOn)) ? &PAL_RED :
                       id == ID_MAGIC ? &PAL_PURPLE :
-                      (id == ID_PLAY || id == ID_TYPE || id == ID_TAPPLY || id == ID_EINS || id == ID_PSAVE || id == ID_UINSTALL || id == ID_LGO) ? &PAL_GREEN : &PAL_BLUE;
+                      (id == ID_PLAY || id == ID_TYPE || id == ID_TAPPLY || id == ID_EINS || id == ID_PSAVE || id == ID_UINSTALL) ? &PAL_GREEN : &PAL_BLUE;
     int pressed = (d->itemState & ODS_SELECTED) != 0;
     gel(c, 1, 1, w - 2, h - 3, fmin((h - 3) / 2.0, S(9)), p, d->hwndItem == hoverBtn, pressed);
     wchar_t t[96]; GetWindowTextW(d->hwndItem, t, 96);
@@ -2214,239 +2200,6 @@ static void toggleKb(void) {
                      : L"Keyboard enabled again.");
 }
 
-/* ---------- Learn tab (screenshot -> Claude) ---------- */
-
-#define WM_LEARNSHOW (WM_APP + 10)
-#define WM_LEARNDONE (WM_APP + 11)
-
-/* minimal GDI+ flat API (avoids the C++ gdiplus.h) */
-typedef struct { UINT32 GdiplusVersion; void *DebugEventCallback; BOOL SuppressBackgroundThread; BOOL SuppressExternalCodecs; } GpStartupInput;
-extern int __stdcall GdiplusStartup(ULONG_PTR *, const GpStartupInput *, void *);
-extern void __stdcall GdiplusShutdown(ULONG_PTR);
-extern int __stdcall GdipCreateBitmapFromHBITMAP(HBITMAP, HPALETTE, void **);
-extern int __stdcall GdipSaveImageToStream(void *, IStream *, const CLSID *, const void *);
-extern int __stdcall GdipDisposeImage(void *);
-static ULONG_PTR gpToken;
-
-static volatile LONG learnBusy;
-typedef struct { wchar_t key[300], model[80]; wchar_t *q; } LearnReq;
-
-static wchar_t *u8dup(const char *s) {
-    if (!s) { wchar_t *e = malloc(sizeof(wchar_t)); e[0] = 0; return e; }
-    int n = MultiByteToWideChar(CP_UTF8, 0, s, -1, NULL, 0);
-    wchar_t *w = malloc(n * sizeof(wchar_t));
-    MultiByteToWideChar(CP_UTF8, 0, s, -1, w, n);
-    return w;
-}
-
-static wchar_t *toCRLF(wchar_t *s) {
-    size_t n = wcslen(s), k = 0;
-    for (size_t i = 0; i < n; i++) if (s[i] == L'\n' && (i == 0 || s[i - 1] != L'\r')) k++;
-    wchar_t *o = malloc((n + k + 1) * sizeof(wchar_t)), *q = o;
-    for (size_t i = 0; i < n; i++) { if (s[i] == L'\n' && (i == 0 || s[i - 1] != L'\r')) *q++ = L'\r'; *q++ = s[i]; }
-    *q = 0; free(s);
-    return o;
-}
-
-static int captureJpeg(char **out, DWORD *outLen) {
-    *out = NULL; *outLen = 0;
-    int sw = GetSystemMetrics(SM_CXSCREEN), sh = GetSystemMetrics(SM_CYSCREEN);
-    int tw = sw, th = sh, MAXW = 1456;
-    if (tw > MAXW) { th = (int)((double)th * MAXW / tw); tw = MAXW; }
-    HDC scr = GetDC(NULL), mem = CreateCompatibleDC(scr);
-    BITMAPINFO bi = {0};
-    bi.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
-    bi.bmiHeader.biWidth = tw; bi.bmiHeader.biHeight = -th;
-    bi.bmiHeader.biPlanes = 1; bi.bmiHeader.biBitCount = 32; bi.bmiHeader.biCompression = BI_RGB;
-    void *bits; HBITMAP bm = CreateDIBSection(mem, &bi, DIB_RGB_COLORS, &bits, NULL, 0);
-    HGDIOBJ old = SelectObject(mem, bm);
-    SetStretchBltMode(mem, HALFTONE); SetBrushOrgEx(mem, 0, 0, NULL);
-    StretchBlt(mem, 0, 0, tw, th, scr, 0, 0, sw, sh, SRCCOPY | CAPTUREBLT);
-    int ok = 0;
-    void *gp = NULL;
-    if (bm && GdipCreateBitmapFromHBITMAP(bm, NULL, &gp) == 0 && gp) {
-        IStream *stm = NULL;
-        if (CreateStreamOnHGlobal(NULL, TRUE, &stm) == S_OK) {
-            CLSID jpg = { 0x557cf401, 0x1a04, 0x11d3, { 0x9a, 0x73, 0, 0, 0xf8, 0x1e, 0xf3, 0x2e } };
-            if (GdipSaveImageToStream(gp, stm, &jpg, NULL) == 0) {
-                HGLOBAL hG = NULL;
-                if (GetHGlobalFromStream(stm, &hG) == S_OK) {
-                    SIZE_T n = GlobalSize(hG); void *p = GlobalLock(hG);
-                    if (p && n) { char *d = malloc(n); memcpy(d, p, n); *out = d; *outLen = (DWORD)n; ok = 1; }
-                    if (p) GlobalUnlock(hG);
-                }
-            }
-            IStream_Release(stm);
-        }
-        GdipDisposeImage(gp);
-    }
-    SelectObject(mem, old); DeleteObject(bm); DeleteDC(mem); ReleaseDC(NULL, scr);
-    return ok;
-}
-
-static char *b64enc(const char *data, DWORD len) {
-    DWORD n = 0;
-    if (!CryptBinaryToStringA((const BYTE *)data, len, CRYPT_STRING_BASE64 | CRYPT_STRING_NOCRLF, NULL, &n)) return NULL;
-    char *o = malloc(n + 1);
-    if (!CryptBinaryToStringA((const BYTE *)data, len, CRYPT_STRING_BASE64 | CRYPT_STRING_NOCRLF, o, &n)) { free(o); return NULL; }
-    o[n] = 0;
-    return o;
-}
-
-static char *jsonEsc(const wchar_t *w) {
-    int n8 = WideCharToMultiByte(CP_UTF8, 0, w, -1, NULL, 0, NULL, NULL);
-    char *s = malloc(n8); WideCharToMultiByte(CP_UTF8, 0, w, -1, s, n8, NULL, NULL);
-    size_t cap = n8 * 2 + 8, k = 0; char *o = malloc(cap);
-    for (char *p = s; *p; p++) {
-        unsigned char c = *p;
-        if (k + 8 > cap) { cap *= 2; o = realloc(o, cap); }
-        if (c == '"' || c == '\\') { o[k++] = '\\'; o[k++] = c; }
-        else if (c == '\n') { o[k++] = '\\'; o[k++] = 'n'; }
-        else if (c == '\r') { o[k++] = '\\'; o[k++] = 'r'; }
-        else if (c == '\t') { o[k++] = '\\'; o[k++] = 't'; }
-        else if (c < 0x20) { k += snprintf(o + k, 8, "\\u%04x", c); }
-        else o[k++] = c;
-    }
-    o[k] = 0; free(s);
-    return o;
-}
-
-static int httpPost(const wchar_t *host, const wchar_t *path, const wchar_t *headers,
-                    const char *body, DWORD blen, char **out, size_t *outLen, DWORD *httpSt) {
-    *out = NULL; *outLen = 0; *httpSt = 0;
-    HINTERNET in = InternetOpenW(L"FrutigerMacro/" APP_VERSION_W, INTERNET_OPEN_TYPE_PRECONFIG, NULL, NULL, 0);
-    if (!in) return (int)GetLastError();
-    DWORD to = 60000;
-    InternetSetOptionW(in, INTERNET_OPTION_CONNECT_TIMEOUT, &to, sizeof to);
-    InternetSetOptionW(in, INTERNET_OPTION_SEND_TIMEOUT, &to, sizeof to);
-    InternetSetOptionW(in, INTERNET_OPTION_RECEIVE_TIMEOUT, &to, sizeof to);
-    HINTERNET con = InternetConnectW(in, host, INTERNET_DEFAULT_HTTPS_PORT, NULL, NULL, INTERNET_SERVICE_HTTP, 0, 0);
-    if (!con) { int e = (int)GetLastError(); InternetCloseHandle(in); return e ? e : -1; }
-    const wchar_t *accept[] = { L"application/json", NULL };
-    HINTERNET req = HttpOpenRequestW(con, L"POST", path, NULL, NULL, accept,
-        INTERNET_FLAG_SECURE | INTERNET_FLAG_RELOAD | INTERNET_FLAG_NO_CACHE_WRITE | INTERNET_FLAG_NO_COOKIES | INTERNET_FLAG_NO_UI, 0);
-    if (!req) { int e = (int)GetLastError(); InternetCloseHandle(con); InternetCloseHandle(in); return e ? e : -1; }
-    BOOL ok = HttpSendRequestW(req, headers, (DWORD)-1, (void *)body, blen);
-    if (!ok) { int e = (int)GetLastError(); InternetCloseHandle(req); InternetCloseHandle(con); InternetCloseHandle(in); return e ? e : -1; }
-    DWORD st = 0, sl = sizeof st;
-    HttpQueryInfoW(req, HTTP_QUERY_STATUS_CODE | HTTP_QUERY_FLAG_NUMBER, &st, &sl, NULL);
-    *httpSt = st;
-    size_t cap = 1 << 16, len = 0; char *b = malloc(cap + 1); DWORD got = 0; int err = 0;
-    for (;;) {
-        if (len + 65536 > cap) { cap *= 2; b = realloc(b, cap + 1); }
-        if (!InternetReadFile(req, b + len, 65536, &got)) { err = (int)GetLastError(); if (!err) err = -1; break; }
-        if (!got) break;
-        len += got;
-        if (len > (16u << 20)) break;
-    }
-    InternetCloseHandle(req); InternetCloseHandle(con); InternetCloseHandle(in);
-    if (err) { free(b); return err; }
-    b[len] = 0; *out = b; *outLen = len;
-    return 0;
-}
-
-static void learnFinish(wchar_t *msg) {
-    PostMessageW(hMain, WM_LEARNDONE, 0, (LPARAM)msg);
-}
-
-static DWORD WINAPI LearnThread(LPVOID arg) {
-    LearnReq *r = arg;
-    Sleep(320);
-    char *jpg; DWORD jlen;
-    int cap = captureJpeg(&jpg, &jlen);
-    PostMessageW(hMain, WM_LEARNSHOW, 0, 0);
-    if (!cap) { free(r->q); free(r); learnFinish(_wcsdup(L"Couldn't capture the screen.")); return 0; }
-
-    char *b64 = b64enc(jpg, jlen); free(jpg);
-    if (!b64) { free(r->q); free(r); learnFinish(_wcsdup(L"Couldn't encode the screenshot.")); return 0; }
-
-    char *qesc = jsonEsc(r->q[0] ? r->q : L"Look at my screen and tell me what to do next. Be concise and give clear steps.");
-    char *mesc = jsonEsc(r->model[0] ? r->model : L"claude-sonnet-5-5");
-    size_t cap2 = strlen(b64) + strlen(qesc) + strlen(mesc) + 512;
-    char *body = malloc(cap2);
-    int blen = snprintf(body, cap2,
-        "{\"model\":\"%s\",\"max_tokens\":1024,\"messages\":[{\"role\":\"user\",\"content\":["
-        "{\"type\":\"image\",\"source\":{\"type\":\"base64\",\"media_type\":\"image/jpeg\",\"data\":\"%s\"}},"
-        "{\"type\":\"text\",\"text\":\"%s\"}]}]}", mesc, b64, qesc);
-    free(b64); free(qesc); free(mesc);
-
-    wchar_t hdr[512];
-    swprintf(hdr, 512, L"x-api-key: %s\r\nanthropic-version: 2023-06-01\r\ncontent-type: application/json\r\n", r->key);
-
-    char *resp; size_t rlen; DWORD st;
-    int e = httpPost(L"api.anthropic.com", L"/v1/messages", hdr, body, (DWORD)blen, &resp, &rlen, &st);
-    free(body); free(r->q); free(r);
-
-    wchar_t *outMsg;
-    if (e) {
-        wchar_t m[256];
-        swprintf(m, 256, L"Couldn't reach Claude (network error %d). Check your internet and that the API key is valid.", e);
-        outMsg = _wcsdup(m);
-    } else if (st == 200) {
-        char *tp = strstr(resp, "\"type\":\"text\"");
-        char *txt = jsonStr(resp, "text", tp ? tp : resp, NULL);
-        if (txt && txt[0]) outMsg = toCRLF(u8dup(txt));
-        else outMsg = _wcsdup(L"Claude returned no text.");
-        free(txt);
-    } else {
-        char *msg = jsonStr(resp, "message", NULL, NULL);
-        wchar_t *wm = u8dup(msg ? msg : "");
-        wchar_t m[600];
-        if (st == 401) swprintf(m, 600, L"Claude rejected the API key (HTTP 401). Check it's correct and active.\r\n\r\n%s", wm);
-        else swprintf(m, 600, L"Claude API error (HTTP %lu):\r\n%s", (unsigned long)st, wm);
-        outMsg = _wcsdup(m);
-        free(msg); free(wm);
-    }
-    free(resp);
-    learnFinish(outMsg);
-    return 0;
-}
-
-static void learnStart(void) {
-    if (learnBusy || busy()) { status(L"Finish the current action before using Learn."); return; }
-    LearnReq *r = calloc(1, sizeof *r);
-    GetDlgItemTextW(hMain, ID_LAPIKEY, r->key, 300);
-    GetDlgItemTextW(hMain, ID_LMODEL, r->model, 80);
-    int qn = GetWindowTextLengthW(GetDlgItem(hMain, ID_LQ));
-    r->q = calloc(qn + 2, sizeof(wchar_t));
-    GetDlgItemTextW(hMain, ID_LQ, r->q, qn + 1);
-    for (wchar_t *p = r->q; *p; p++) if (*p == L'\r') *p = L' ';
-    if (!r->key[0]) {
-        free(r->q); free(r);
-        SetDlgItemTextW(hMain, ID_LOUT, L"Paste your Anthropic API key in the box above first.\r\n\r\nGet one at console.anthropic.com → API Keys. It's saved locally so you only enter it once.");
-        return;
-    }
-    learnBusy = 1;
-    SetDlgItemTextW(hMain, ID_LOUT, L"Reading your screen…");
-    ShowWindow(hFrame, SW_HIDE);
-    CloseHandle(CreateThread(NULL, 0, LearnThread, r, 0, NULL));
-}
-
-static void learnCopy(void) {
-    HWND o = GetDlgItem(hMain, ID_LOUT);
-    int n = GetWindowTextLengthW(o);
-    if (!n || !OpenClipboard(hMain)) return;
-    EmptyClipboard();
-    HGLOBAL h = GlobalAlloc(GMEM_MOVEABLE, (n + 1) * sizeof(wchar_t));
-    wchar_t *p = GlobalLock(h);
-    GetWindowTextW(o, p, n + 1);
-    GlobalUnlock(h);
-    SetClipboardData(CF_UNICODETEXT, h);
-    CloseClipboard();
-    status(L"Answer copied to clipboard.");
-}
-
-static void learnLoad(void) {
-    wchar_t b[320];
-    if (GetPrivateProfileStringW(L"Learn", L"ApiKey", L"", b, 320, iniPath) && b[0]) SetDlgItemTextW(hMain, ID_LAPIKEY, b);
-    if (GetPrivateProfileStringW(L"Learn", L"Model", L"", b, 320, iniPath) && b[0]) SetDlgItemTextW(hMain, ID_LMODEL, b);
-}
-static void learnSave(void) {
-    wchar_t b[320];
-    GetDlgItemTextW(hMain, ID_LAPIKEY, b, 320); WritePrivateProfileStringW(L"Learn", L"ApiKey", b, iniPath);
-    GetDlgItemTextW(hMain, ID_LMODEL, b, 320); WritePrivateProfileStringW(L"Learn", L"Model", b, iniPath);
-}
-
 /* ---------- controls & pages ---------- */
 
 typedef struct { HWND h; int page, x, y, w, hh; } Ctl;
@@ -2484,7 +2237,6 @@ static void showPage(int p) {
     for (int i = 0; i < nctl; i++) ShowWindow(ctls[i].h, onPage(ctls[i].page, p) ? SW_SHOWNA : SW_HIDE);
     InvalidateRect(hMain, NULL, FALSE);
     if (p == PG_TEST) SetFocus(GetDlgItem(hMain, ID_TEDIT));
-    else if (p == PG_LEARN) SetFocus(GetDlgItem(hMain, ID_LAPIKEY));
     else if (p == PG_INSTR) SetFocus(GetDlgItem(hMain, ID_TEXT));
     else if (p == PG_EDIT) { refreshList(); SetFocus(lv()); }
     else SetFocus(GetDlgItem(hMain, ID_REC));
@@ -2569,17 +2321,6 @@ static void buildUI(void) {
     BTN(L"Finish", 136, 488, 90, 30, ID_TFIN);
     BTN(L"Apply to Humanizer", 232, 488, 188, 30, ID_TAPPLY);
 
-    buildPage = PG_LEARN;
-    mk(WS_EX_CLIENTEDGE, L"EDIT", L"", WS_TABSTOP | ES_AUTOHSCROLL | ES_PASSWORD, 92, 74, 328, 22, ID_LAPIKEY);
-    mk(WS_EX_CLIENTEDGE, L"EDIT", L"claude-sonnet-5-5", WS_TABSTOP | ES_AUTOHSCROLL, 92, 100, 200, 22, ID_LMODEL);
-    HWND lq = mk(WS_EX_CLIENTEDGE, L"EDIT", L"Look at my screen and tell me what to do next. Be concise and give clear steps.",
-                 WS_TABSTOP | WS_VSCROLL | ES_MULTILINE | ES_AUTOVSCROLL, 24, 150, 392, 64, ID_LQ);
-    (void)lq;
-    BTN(L"Read my screen", 20, 224, 180, 30, ID_LGO);
-    BTN(L"Copy", 208, 224, 96, 30, ID_LCOPY);
-    BTN(L"Clear", 312, 224, 108, 30, ID_LCLR);
-    mk(WS_EX_CLIENTEDGE, L"EDIT", L"", WS_VSCROLL | ES_MULTILINE | ES_READONLY | ES_AUTOVSCROLL, 24, 276, 392, 228, ID_LOUT);
-
     buildPage = PG_GLOBAL;
     for (int i = 0; i < HK_N; i++) {
         int x = (i & 1) ? 222 : 20, y = 400 + (i / 2) * 28;
@@ -2647,7 +2388,6 @@ static void loadSettings(void) {
         if (GetPrivateProfileStringW(L"Settings", SAVED[i].key, L"\x01", b, 64, iniPath) && b[0] != 1)
             SetDlgItemTextW(hMain, SAVED[i].id, b);
     for (int i = 0; i < TG_N; i++) tog[i].on = GetPrivateProfileIntW(L"Settings", TOGKEY[i], tog[i].on, iniPath) != 0;
-    learnLoad();
 }
 
 static void saveSettings(void) {
@@ -2657,7 +2397,6 @@ static void saveSettings(void) {
         WritePrivateProfileStringW(L"Settings", SAVED[i].key, b, iniPath);
     }
     for (int i = 0; i < TG_N; i++) WritePrivateProfileStringW(L"Settings", TOGKEY[i], tog[i].on ? L"1" : L"0", iniPath);
-    learnSave();
 }
 
 static void applyTest(void) {
@@ -2712,9 +2451,6 @@ static LRESULT CALLBACK WndProc(HWND h, UINT m, WPARAM wp, LPARAM lp) {
         } break;
         case ID_KBLOCK: toggleKb(); break;
         case ID_MAGIC: if (magicOn) magicStop(0); else magicStart(); break;
-        case ID_LGO: learnStart(); break;
-        case ID_LCOPY: learnCopy(); break;
-        case ID_LCLR: SetDlgItemTextW(h, ID_LOUT, L""); break;
         case ID_EUPD: case ID_EINS: case ID_EDEL: case ID_EUP: case ID_EDOWN: case ID_ESCALEGO: case ID_ESTRIP:
             editorCmd(LOWORD(wp)); break;
         case ID_ESAVE: SendMessageW(h, WM_COMMAND, ID_SAVE, 0); break;
@@ -2830,13 +2566,6 @@ static LRESULT CALLBACK WndProc(HWND h, UINT m, WPARAM wp, LPARAM lp) {
         updErr = 1; wcsncpy(updConnMsg, m, 159); updConnMsg[159] = 0;
         status(L"%s", m); free(m); InvalidateRect(h, NULL, FALSE);
     } return 0;
-    case WM_LEARNSHOW:
-        ShowWindow(hFrame, SW_SHOW); SetForegroundWindow(hFrame);
-        SetDlgItemTextW(h, ID_LOUT, L"Asking Claude…"); return 0;
-    case WM_LEARNDONE:
-        ShowWindow(hFrame, SW_SHOW);
-        SetDlgItemTextW(h, ID_LOUT, (wchar_t *)lp); free((void *)lp);
-        learnBusy = 0; return 0;
     case WM_UPDRESTART: restartUpdated(); return 0;
     case WM_DESTROY:
         saveSettings();
@@ -2853,7 +2582,6 @@ int WINAPI WinMain(HINSTANCE hi, HINSTANCE hp, LPSTR cmd, int show) {
     INITCOMMONCONTROLSEX icc = { sizeof icc, ICC_HOTKEY_CLASS | ICC_STANDARD_CLASSES | ICC_LISTVIEW_CLASSES };
     InitCommonControlsEx(&icc);
     LoadLibraryW(L"Msftedit.dll");
-    { GpStartupInput gi = { 1, NULL, FALSE, FALSE }; GdiplusStartup(&gpToken, &gi, NULL); }
     timeBeginPeriod(1);
     LARGE_INTEGER f; QueryPerformanceFrequency(&f); qpf = (double)f.QuadPart;
 
