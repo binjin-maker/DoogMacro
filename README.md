@@ -69,7 +69,3 @@ Or on Windows with MinGW-w64, using the same flags as `build.sh`.
 ## Settings
 
 Everything is saved to `Frutiger Astro.ini` next to the EXE: hotkeys, Instruct settings, presets, window scale.
-
-## Terms of use
-
-Frutiger Astro is not intended and should not be used for cheating by any circumstances. Any instances of Frutiger Astro being used for classwork, writing, or assigned work will be terminated and renewal will be declined. Every install has its own Copy ID (shown on the Update tab), and terminated IDs are listed in [`update/revoked.txt`](update/revoked.txt).
