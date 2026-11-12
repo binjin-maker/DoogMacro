@@ -1,1 +1,2 @@
-# FrutigerMacro terminated copies - one Copy ID per line
+# Frutiger Astro terminated copies - one Copy ID per line
+FM-H44V-LS39
