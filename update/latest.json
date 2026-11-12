@@ -1,7 +1,7 @@
 {
-  "version": "1.15.37",
+  "version": "1.15.38",
   "minRun": "1.15.7",
   "url": "https://raw.githubusercontent.com/binjin-maker/DoogMacro/main/update/FrutigerAstro.exe",
-  "sha256": "fd84d8b47b0c1b74512bca8e0e9093c6a3446cfa7210cf20fc93667e28777621",
-  "notes": "1.15.37\n- Startup animation back to the classic eye"
+  "sha256": "1924df8eeb3a91e873632c97c3546cc311552aa558e99920f86aea89f2643295",
+  "notes": "1.15.38\n- Restart just moves the cursor back to the start now (it doesn't begin typing)\n- Removed the (F11) hint from the Type button"
 }
